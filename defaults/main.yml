@@ -1,0 +1,5 @@
+---
+# defaults file for cadvisor
+cadvisor_config_file: /etc/sysconfig/cadvisor 
+cadvisor_log_dir: /var/log/cadvisor
+cadvisor_port: 8080

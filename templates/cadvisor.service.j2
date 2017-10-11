@@ -1,0 +1,10 @@
+[Unit]
+Description=Cadvisor
+
+[Service]
+User=root
+EnvironmentFile={{cadvisor_config_file}}
+ExecStart=/usr/sbin/cadvisor $OPTIONS
+
+[Install]
+WantedBy=multi-user.target

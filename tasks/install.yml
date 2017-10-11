@@ -1,0 +1,45 @@
+---
+# tasks file for cadvisor
+- name: Copy cadvisor binay
+  copy:
+    src: cadvisor
+    dest: /usr/sbin/cadvisor
+    mode: 0755
+
+- name: Ensure config dir exists
+  file:
+    path: "{{cadvisor_config_file | dirname}}"
+    state: directory
+
+- name: Ensure log dir exists
+  file:
+    path: "{{cadvisor_log_dir}}"
+    state: directory
+
+- name: Copy cadvisor config file
+  template:
+    src: cadvisor.j2
+    dest: "{{cadvisor_config_file}}"
+    mode: 0644 
+  register: ca_cf_cp
+
+- name: Copy cadvisor systemd script
+  template:
+    src: cadvisor.service.j2
+    dest: /usr/lib/systemd/system/cadvisor.service
+    mode: 0644
+  register: ca_sd_cp
+
+- name: Make a link to /etc/systemd/system/multi-user.target.wants/cadvisor.service
+  file:
+    path: /usr/lib/systemd/system/cadvisor.service
+    dest: /etc/systemd/system/multi-user.target.wants/cadvisor.service
+    state: link
+    
+- name: Start service
+  systemd:
+    name: cadvisor
+    enabled: yes
+    state: restarted
+    daemon_reload: "{{ca_sd_cp.changed}}"
+  when: ca_cf_cp.changed or ca_sd_cp.changed

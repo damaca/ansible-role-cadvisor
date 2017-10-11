@@ -1,0 +1,1 @@
+OPTIONS="-log_dir {{cadvisor_log_dir}} -port {{cadvisor_port}} {% if cadvisor_listen_ip is defined %}-listen_ip {{cadvisor_listen_ip}} {% endif %}"
