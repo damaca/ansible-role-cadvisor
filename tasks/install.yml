@@ -32,7 +32,7 @@
 
 - name: Make a link to /etc/systemd/system/multi-user.target.wants/cadvisor.service
   file:
-    path: /usr/lib/systemd/system/cadvisor.service
+    src: /usr/lib/systemd/system/cadvisor.service
     dest: /etc/systemd/system/multi-user.target.wants/cadvisor.service
     state: link
     
