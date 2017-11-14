@@ -1,5 +1,7 @@
 [Unit]
 Description=Cadvisor
+After=docker.service
+Requires=docker.service
 
 [Service]
 User=root
