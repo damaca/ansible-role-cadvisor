@@ -5,6 +5,7 @@
     src: cadvisor
     dest: /usr/sbin/cadvisor
     mode: 0755
+  register: ca_binary
 
 - name: Ensure config dir exists
   file:
@@ -42,4 +43,4 @@
     enabled: yes
     state: restarted
     daemon_reload: "{{ca_sd_cp.changed}}"
-  when: ca_cf_cp.changed or ca_sd_cp.changed
+  when: ca_cf_cp.changed or ca_sd_cp.changed or ca_binary.changed
